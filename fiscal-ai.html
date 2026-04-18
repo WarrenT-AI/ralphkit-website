@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财税AI员工 - RalphKit | 让AI成为你的超级会计</title>
+    <meta name="description" content="财税AI员工：自动识别票据、智能生成凭证、一键制作报表。基于飞书平台，让AI帮你做账，效率提升10倍。">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6366f1;
+            --accent: #818cf8;
+            --glow: #a5b4fc;
+            --text: #ffffff;
+            --text-dim: #94a3b8;
+            --dark: #0a0a0f;
+            --card: #12121a;
+            --card-hover: #1a1a24;
+            --border: #2a2a3a;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse 60% 40% at 50% 20%, rgba(99, 102, 241, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 40px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        
+        .outline-btn {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .outline-btn:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        /* Stats */
+        .stats {
+            padding: 60px 0;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .stat-item p {
+            color: var(--text-dim);
+            font-size: 15px;
+        }
+        
+        /* Features */
+        .features {
+            padding: 100px 0;
+        }
+        
+        .section-label {
+            text-align: center;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 18px;
+            margin-bottom: 60px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 36px;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.15);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .feature-card p {
+            color: var(--text-dim);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        /* Workflow */
+        .workflow {
+            padding: 100px 0;
+            background: var(--card);
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 16px;
+        }
+        
+        .step h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .step p {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+        
+        .step-arrow {
+            position: absolute;
+            right: -20px;
+            top: 20px;
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        /* Invoice Types */
+        .invoice-types {
+            padding: 100px 0;
+        }
+        
+        .invoice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+        }
+        
+        .invoice-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .invoice-item:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        .invoice-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        
+        .invoice-item h4 {
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+        
+        .invoice-item p {
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+        
+        /* Testimonial */
+        .testimonial {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--card) 0%, var(--dark) 100%);
+        }
+        
+        .testimonial-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .quote {
+            font-size: 20px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+            color: var(--text);
+        }
+        
+        .author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+        
+        .author-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .author-info h4 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        
+        .author-info p {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+        
+        /* FAQ */
+        .faq {
+            padding: 100px 0;
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 16px;
+        }
+        
+        .faq-item h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        
+        .faq-item p {
+            color: var(--text-dim);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        
+        /* CTA */
+        .cta-section {
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .cta-section h2 {
+            font-size: 44px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            color: var(--text-dim);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        
+        /* Form */
+        .form-section {
+            padding: 100px 0;
+            background: var(--card);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+        
+        .form-info h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .form-info p {
+            color: var(--text-dim);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+        
+        .form-info ul {
+            list-style: none;
+        }
+        
+        .form-info li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            color: var(--text-dim);
+        }
+        
+        .form-info li::before {
+            content: '✓';
+            width: 24px;
+            height: 24px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            font-size: 14px;
+        }
+        
+        form {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        form .cta-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        footer p {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+        
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-title { font-size: 32px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .workflow-steps { flex-direction: column; align-items: center; }
+            .step-arrow { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://ralphkit.pages.dev" class="logo">Ralph</a>
+                <ul class="nav-links">
+                    <li><a href="#features">功能</a></li>
+                    <li><a href="#workflow">流程</a></li>
+                    <li><a href="#invoice">支持的票据</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+                <a href="#contact" class="cta-btn">立即体验</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="badge">🚀 基于飞书平台，开箱即用</div>
+            <h1>让AI成为你的<br><span>超级会计</span></h1>
+            <p>财税AI员工：自动识别票据、智能生成凭证、一键制作报表。AI做账，效率提升10倍，会计师随时在线。</p>
+            <div class="hero-btns">
+                <a href="#contact" class="cta-btn">免费试用</a>
+                <a href="https://ralphkit.pages.dev" class="outline-btn">返回官网</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>99%</h3>
+                    <p>识别准确率</p>
+                </div>
+                <div class="stat-item">
+                    <h3>10x</h3>
+                    <p>效率提升</p>
+                </div>
+                <div class="stat-item">
+                    <h3>80%</h3>
+                    <p>成本降低</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>全天候服务</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-label">核心功能</div>
+            <h2 class="section-title">财税工作，全自动化</h2>
+            <p class="section-subtitle">从票据到报表，AI全流程处理</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📷</div>
+                    <h3>智能票据识别</h3>
+                    <p>上传票据图片，AI自动识别发票信息。支持增值税发票、银行回单、火车票、出租车票等9种常见票据。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI自动审核</h3>
+                    <p>AI二次审核识别结果，验证税额计算、检查数据逻辑、标记异常情况，确保数据准确。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>智能生成凭证</h3>
+                    <p>根据业务类型自动匹配借贷科目，生成合规会计凭证。借贷平衡自动校验，准确无误。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>一键生成报表</h3>
+                    <p>自动生成资产负债表、利润表、现金流量表。数据可视化，财务状况一目了然。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>飞书深度集成</h3>
+                    <p>基于飞书多维表格，手机电脑都能用。数据实时同步，团队协作更高效。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>企业级安全</h3>
+                    <p>数据本地存储，隐私保护合规。腾讯云OCR保障，企业级数据安全。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="workflow" id="workflow">
+        <div class="container">
+            <div class="section-label">工作流程</div>
+            <h2 class="section-title">五步，票据变报表</h2>
+            <p class="section-subtitle">简单五步，AI帮你完成所有财税工作</p>
+            
+            <div class="workflow-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>上传票据</h4>
+                    <p>拍照或上传票据图片</p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>AI识别</h4>
+                    <p>腾讯云OCR自动识别</p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>智能审核</h4>
+                    <p>AI二次校验数据</p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>生成凭证</h4>
+                    <p>自动匹配科目生成凭证</p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h4>报表输出</h4>
+                    <p>一键生成财务报表</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="invoice-types" id="invoice">
+        <div class="container">
+            <div class="section-label">支持的票据</div>
+            <h2 class="section-title">覆盖企业常用票据类型</h2>
+            <p class="section-subtitle">支持9种常见票据，满足日常财税需求</p>
+            
+            <div class="invoice-grid">
+                <div class="invoice-item">
+                    <div class="invoice-icon">🧾</div>
+                    <h4>增值税专用发票</h4>
+                    <p>可抵扣进项税</p>
+                </div>
+                <div class="invoice-item">
+                    <div class="invoice-icon">🧾</div>
+                    <h4>增值税普通发票</h4>
+                    <p>不可抵扣</p>
+                </div>
+                <div class="invoice-item">
+                    <div class="invoice-icon">📄</div>
+                    <h4>电子发票</h4>
+                    <p>PDF/OFD格式</p>
+                </div>
+                <div class="invoice-item">
+                    <div class="invoice-icon">🏦</div>
+                    <h4>银行回单</h4>
+                    <p>转账/汇款凭证</p>
+                </div>
+                <div class="invoice-item">
+                    <div class="invoice-icon">🚄</div>
+                    <h4>火车票</h4>
+                    <p>出差交通费</p>
+                </div>
+                <div class="invoice-item">
+                    <div class="invoice-icon">✈️</div>
+                    <h4>飞机票</h4>
+                    <p>行程单识别</p>
+                </div>
+                <div class="invoice-item">
+                    <div class="invoice-icon">🚕</div>
+                    <h4>出租车票</h4>
+                    <p>市内交通</p>
+                </div>
+                <div class="invoice-item">
+                    <div class="invoice-icon">🧾</div>
+                    <h4>通用机打发票</h4>
+                    <p>其他票据</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonial">
+        <div class="container">
+            <div class="testimonial-card">
+                <p class="quote">"以前每月做账要3天，现在用财税AI员工，半天就搞定了。票据拍照上传，AI自动识别、生成凭证，我只需要审核一下。真的太好用了！"</p>
+                <div class="author">
+                    <div class="author-avatar">👩</div>
+                    <div class="author-info">
+                        <h4>张会计</h4>
+                        <p>杭州某科技公司财务主管</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-label">常见问题</div>
+            <h2 class="section-title">你可能想问</h2>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h4>Q: 财税AI员工需要安装吗？</h4>
+                    <p>A: 不需要安装。基于飞书多维表格开发，直接通过浏览器或手机飞书APP访问使用，0学习成本。</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Q: 支持哪些票据类型？</h4>
+                    <p>A: 支持增值税专用发票、增值税普通发票、电子发票（PDF/OFD）、火车票、飞机票行程单、出租车票、银行回单、收据、通用机打发票等9种常见票据类型。</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Q: 识别准确率如何？</h4>
+                    <p>A: 整体识别准确率超过99%。对于模糊或特殊票据，AI会自动标记并支持人工复核修正。</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Q: 科目规则可以自定义吗？</h4>
+                    <p>A: 可以。系统内置标准科目对照表，同时支持根据您的业务需求自定义科目匹配规则。</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Q: 有免费试用吗？</h4>
+                    <p>A: 有！填写下方表单，即可获得7天免费试用体验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="form-section" id="contact">
+        <div class="container">
+            <div class="form-grid">
+                <div class="form-info">
+                    <h2>申请免费试用</h2>
+                    <p>留下您的联系方式，我们的顾问将在24小时内与您联系，为您安排财税AI员工免费试用。</p>
+                    <ul>
+                        <li>7天免费试用</li>
+                        <li>专属顾问1对1服务</li>
+                        <li>上门培训支持</li>
+                        <li>数据迁移协助</li>
+                    </ul>
+                </div>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>姓名 *</label>
+                            <input type="text" placeholder="您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label>手机/微信 *</label>
+                            <input type="text" placeholder="联系方式" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>公司名称 *</label>
+                        <input type="text" placeholder="您的公司" required>
+                    </div>
+                    <div class="form-group">
+                        <label>公司规模</label>
+                        <select>
+                            <option value="">请选择</option>
+                            <option value="1-10">1-10人</option>
+                            <option value="11-50">11-50人</option>
+                            <option value="51-200">51-200人</option>
+                            <option value="200+">200人以上</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>留言（选填）</label>
+                        <textarea placeholder="请描述您的财税需求或问题..."></textarea>
+                    </div>
+                    <button type="submit" class="cta-btn">提交申请</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2026 <a href="https://ralphkit.pages.dev">RalphKit</a>. 让AI成为你的超级员工。 | <a href="https://ralphkit.pages.dev">返回官网</a></p>
+        </div>
+    </footer>
+</body>
+</html>
