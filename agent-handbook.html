@@ -3,460 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Agent 实操手册 - RalphKit | 把AI变成真正的员工</title>
-    <meta name="description" content="一本写给AI开发者的实战手册。不吹牛，只讲真正跑通过的方法：身份设计、记忆系统、任务流转、成本控制。19.9元。">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://ralphkit.com/agent-handbook.html">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="product">
-    <meta property="og:title" content="AI Agent 实操手册 - 把AI变成真正的员工">
-    <meta property="og:description" content="实战方法：SOUL.md写法、记忆系统、任务流转、成本控制。不理论，可落地。">
-    <meta property="og:url" content="https://ralphkit.com/agent-handbook.html">
-    <meta property="og:site_name" content="RalphKit">
-
+    <title>AI Agent 实操手册 — RalphKit</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
             --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
             --accent: #818cf8;
-            --glow: #a5b4fc;
-            --text: #ffffff;
-            --text-dim: #94a3b8;
-            --dark: #0a0a0f;
-            --card: #12121a;
-            --card-hover: #1a1a24;
-            --border: #2a2a3a;
-            --success: #10b981;
-            --warning: #f59e0b;
         }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--dark);
+            background: var(--bg);
             color: var(--text);
             line-height: 1.7;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
-
-        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(20px);
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        .back-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { color: var(--accent); }
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
             border-bottom: 1px solid var(--border);
         }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #e0e0e0);
-            -webkit-background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--text); }
-
-        .cta-btn {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary);
             color: white;
-            padding: 12px 28px;
-            border-radius: 8px;
-            text-decoration: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
             font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-            display: inline-block;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
-
-        .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
-        }
-
-        /* Hero */
-        .hero {
-            padding: 160px 0 80px;
-            text-align: center;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid var(--primary);
-            color: var(--glow);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-
-        .hero h1 {
-            font-size: 52px;
-            font-weight: 800;
-            margin-bottom: 20px;
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
             line-height: 1.2;
         }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--glow), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto 1.5rem;
         }
-
-        .hero .subtitle {
-            font-size: 22px;
-            color: var(--text-dim);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-
-        /* Book Preview */
-        .book-preview {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 48px;
-            margin: 60px 0;
-            text-align: left;
-        }
-
-        .book-preview h2 {
-            font-size: 28px;
-            margin-bottom: 24px;
-            color: var(--text);
-        }
-
-        .toc {
-            display: grid;
-            gap: 16px;
-        }
-
-        .toc-item {
-            display: flex;
-            gap: 16px;
-            padding: 16px 20px;
-            background: var(--card-hover);
-            border-radius: 10px;
-            border: 1px solid transparent;
-            transition: border-color 0.3s;
-        }
-
-        .toc-item:hover {
-            border-color: var(--primary);
-        }
-
-        .toc-num {
-            font-size: 14px;
-            color: var(--primary);
-            font-weight: 700;
-            min-width: 28px;
-        }
-
-        .toc-text strong {
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .toc-text span {
-            font-size: 14px;
-            color: var(--text-dim);
-        }
-
-        /* Pricing */
-        .pricing {
-            text-align: center;
-            padding: 80px 0;
-        }
-
-        .price-tag {
-            font-size: 72px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--text), var(--glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
-
-        .price-note {
-            color: var(--text-dim);
-            font-size: 16px;
-            margin-bottom: 40px;
-        }
-
-        .features-list {
-            display: grid;
-            gap: 16px;
-            text-align: left;
-            max-width: 500px;
-            margin: 0 auto 48px;
-        }
-
-        .feature-item {
+        .price-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 18px;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
-
-        .feature-item::before {
-            content: '✓';
-            color: var(--success);
+        .price {
+            font-size: 2.5rem;
             font-weight: 700;
+            color: var(--accent);
         }
-
-        /* Pain Points */
-        .pain-points {
-            padding: 80px 0;
-            border-top: 1px solid var(--border);
+        .price-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
-
-        .pain-points h2 {
-            font-size: 28px;
-            text-align: center;
-            margin-bottom: 48px;
+        .buy-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.9rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.1s;
+            cursor: pointer;
+            border: none;
         }
-
-        .pain-grid {
+        .buy-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        h3 {
+            font-size: 1.05rem;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .chapters {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            gap: 0.75rem;
         }
-
-        .pain-card {
-            background: var(--card);
+        .chapter {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+        }
+        .chapter-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+        .chapter-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .workflow-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        .who-is-this {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 28px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
-
-        .pain-card h3 {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: var(--warning);
+        .who-is-this h3 {
+            margin-top: 0;
+            color: var(--accent);
         }
-
-        .pain-card p {
-            color: var(--text-dim);
-            font-size: 15px;
+        .who-is-this ul {
+            list-style: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
-
-        /* CTA */
-        .cta-section {
+        .who-is-this ul li::before {
+            content: "→ ";
+            color: var(--primary);
+        }
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .faq-q {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+        .faq-a {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .version-note {
             text-align: center;
-            padding: 80px 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid var(--border);
-        }
-
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 16px;
-        }
-
-        .cta-section p {
-            color: var(--text-dim);
-            margin-bottom: 40px;
-            font-size: 18px;
-        }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 0;
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 14px;
-        }
-
-        footer a {
-            color: var(--text-dim);
-            text-decoration: none;
-        }
-
-        footer a:hover { color: var(--text); }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
-            .hero .subtitle { font-size: 18px; }
-            .nav-links { display: none; }
-            .book-preview { padding: 28px; }
-            .price-tag { font-size: 56px; }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <a href="/" class="back-link">← 返回 ralphkit.com</a>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="/" class="logo">RalphKit</a>
-                <ul class="nav-links">
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/fiscal-ai.html">财税AI</a></li>
-                    <li><a href="/#products">产品</a></li>
-                </ul>
-                <a href="/" class="cta-btn">返回官网</a>
-            </nav>
+        <div class="hero">
+            <span class="hero-badge">数字产品 · PDF格式</span>
+            <h1>AI Agent 实操手册</h1>
+            <p class="subtitle">把你的 AI 从工具，变成能独立工作的"员工"。包含身份设计、记忆系统、任务流转、Universal Workflow。</p>
+            <div class="price-row">
+                <span class="price">¥19.9</span>
+                <span class="price-note">约 $2.75 USD</span>
+            </div>
+            <a href="#gumroad-link" class="buy-btn">立即获取</a>
         </div>
-    </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="badge">📖 数字手册 · 马上可用</div>
-            <h1>把 <span>AI</span> 变成真正的员工</h1>
-            <p class="subtitle">一本写给AI开发者的实战手册。不吹牛，不理论，只讲真正跑通过的方法。</p>
-            <a href="#buy" class="cta-btn">立即获取 · 19.9元</a>
+        <div class="section">
+            <h2>核心：Universal Agent Workflow</h2>
+            <p>所有任务都适用这个流程。不管是写文案、做调研、开发功能——都是这个循环：</p>
+            <div class="workflow-box">调研 → 分析 → 创作 → 测试 → 验证 → 反馈 → 修正 → 输出</div>
+            <p>先调研和分析，创作才是精准的。跳过前面步骤直接让 AI 输出，结果往往是方向错了反复改。</p>
         </div>
-    </section>
 
-    <section class="container">
-        <div class="book-preview">
+        <div class="section">
             <h2>这本手册包含什么</h2>
-            <div class="toc">
-
-                <div class="toc-item">
-                    <div class="toc-num">01</div>
-                    <div class="toc-text">
-                        <strong>身份设计：SOUL.md 怎么写</strong>
-                        <span>AI 的性格决定它怎么和你互动。写清楚比写得多更重要。</span>
-                    </div>
+            <div class="chapters">
+                <div class="chapter">
+                    <div class="chapter-title">第一章 · 身份设计</div>
+                    <p class="chapter-desc">SOUL.md 怎么写，让 AI 知道自己是"谁"。不只是助手，是一个有性格、有立场、有边界的角色。</p>
                 </div>
-
-                <div class="toc-item">
-                    <div class="toc-num">02</div>
-                    <div class="toc-text">
-                        <strong>记忆系统：MEMORY.md 架构</strong>
-                        <span>怎么让 AI 记住你的业务、你的偏好、你的团队。不是一次写完，是持续运转的系统。</span>
-                    </div>
+                <div class="chapter">
+                    <div class="chapter-title">第二章 · 记忆系统</div>
+                    <p class="chapter-desc">MEMORY.md 的结构与更新节奏。让 AI 记住你的业务、你的习惯、你的偏好——不是每次从零开始。</p>
                 </div>
-
-                <div class="toc-item">
-                    <div class="toc-num">03</div>
-                    <div class="toc-text">
-                        <strong>任务流转：PRD 驱动 + 短循环工作</strong>
-                        <span>怎么让 AI 知道"做完"是什么标准，怎么用短任务循环避免 AI"变笨"。</span>
-                    </div>
+                <div class="chapter">
+                    <div class="chapter-title">第三章 · 任务流转</div>
+                    <p class="chapter-desc">PRD 驱动 + Ralph Loop（短任务循环）。解决长 session 变笨的问题。Sub-agent 并行执行。</p>
                 </div>
-
-                <div class="toc-item">
-                    <div class="toc-num">04</div>
-                    <div class="toc-text">
-                        <strong>成本控制：模型分工原则</strong>
-                        <span>什么任务用什么模型。心跳检测、批量任务、复杂推理——成本差 50 倍的实战经验。</span>
-                    </div>
+                <div class="chapter">
+                    <div class="chapter-title">第四章 · 成本控制</div>
+                    <p class="chapter-desc">不同任务用不同模型。Vision、图片识别、日常观测用便宜模型；复杂推理用强模型。省 50 倍不是梦。</p>
                 </div>
-
-                <div class="toc-item">
-                    <div class="toc-num">05</div>
-                    <div class="toc-text">
-                        <strong>安全边界：信任阶梯</strong>
-                        <span>哪些权限必须保留，哪些可以逐步开放。信任是用表现换来的，不是直接给的。</span>
-                    </div>
+                <div class="chapter">
+                    <div class="chapter-title">第五章 · 视觉输入</div>
+                    <p class="chapter-desc">2026 年 Agent 的标配能力。截图分析、UI 审核、数据图表解读——让 Agent 真正"看见"。</p>
                 </div>
-
-                <div class="toc-item">
-                    <div class="toc-num">06</div>
-                    <div class="toc-text">
-                        <strong>踩坑记录 + 可用模板</strong>
-                        <span>真实踩过的坑：记忆系统太复杂、给太多自主权太快、用最强模型做所有事。附可直接复制的模板。</span>
-                    </div>
+                <div class="chapter">
+                    <div class="chapter-title">第六章 · 安全边界</div>
+                    <p class="chapter-desc">信任阶梯。AI 能做什么、不能做什么、什么需要你确认。一步一步开放权限。</p>
                 </div>
-
+                <div class="chapter">
+                    <div class="chapter-title">第七章 · 踩坑记录</div>
+                    <p class="chapter-desc">记忆系统太复杂、用最强模型做所有事、开放权限太快——真实踩过的坑，不是理论。</p>
+                </div>
+                <div class="chapter">
+                    <div class="chapter-title">附录 · 快速开始模板</div>
+                    <p class="chapter-desc">SOUL.md、MEMORY.md、安全规则、PRD 任务卡——直接复制改一改就能用。</p>
+                </div>
             </div>
         </div>
-    </section>
 
-    <section class="pain-points">
-        <div class="container">
-            <h2>这本手册解决什么问题</h2>
-            <div class="pain-grid">
-
-                <div class="pain-card">
-                    <h3>✗ AI 每次都是新的</h3>
-                    <p>每次打开 ChatGPT，AI 什么都不记得。用完即丢，没有积累。这是用 AI 工具的方式，不是用 AI 员工的方式。</p>
-                </div>
-
-                <div class="pain-card">
-                    <h3>✗ 上下文不够用</h3>
-                    <p>把背景信息全塞进 prompt，太长 AI 会遗漏，分开发又前后矛盾。问题不在上下文长度，在于没有持久记忆。</p>
-                </div>
-
-                <div class="pain-card">
-                    <h3>✗ AI 不知道业务</h3>
-                    <p>AI 知道什么是"营销"，但不知道你的产品、你的客户、你的团队。把业务知识持久化，是让 AI 真正有用的前提。</p>
-                </div>
-
-                <div class="pain-card">
-                    <h3>✗ 成本失控</h3>
-                    <p>所有任务都用最强模型，月底账单吓一跳。不同任务需要不同的模型，成本可以压到 1/50。</p>
-                </div>
-
+        <div class="section">
+            <h2>适合谁</h2>
+            <div class="who-is-this">
+                <h3>你需要这本手册，如果：</h3>
+                <ul>
+                    <li>你在用 OpenClaw、Claude Code 或其他 Agent 框架，觉得"不够顺手"</li>
+                    <li>你想让 AI 记住你的业务，而不是每次从零开始</li>
+                    <li>你想让 AI 能独立完成多步骤任务，而不是只回答一个问题</li>
+                    <li>你想控制 AI 的使用成本，不想月底账单爆炸</li>
+                    <li>你对 Agent 的视觉能力（图片识别）感兴趣，想用起来</li>
+                </ul>
             </div>
         </div>
-    </section>
 
-    <section class="pricing" id="buy">
-        <div class="container">
-            <div class="price-tag">19.9元</div>
-            <p class="price-note">一次购买，持续更新</p>
-
-            <div class="features-list">
-                <div class="feature-item">完整手册（md 格式）</div>
-                <div class="feature-item">SOUL.md / MEMORY.md 模板</div>
-                <div class="feature-item">安全边界模板</div>
-                <div class="feature-item">Ralph Loop 任务流转方案</div>
-                <div class="feature-item">模型分工成本计算参考</div>
+        <div class="section">
+            <h2>常见问题</h2>
+            <div class="faq-item">
+                <div class="faq-q">这本手册和 Felix 的有什么不同？</div>
+                <div class="faq-a">Felix 写的是"人类怎么雇用 AI"。这本写的是"怎么把 AI 变成真正的员工"——有身份、有记忆、能持续工作的 Agent。</div>
             </div>
-
-            <a href="#" class="cta-btn" id="buy-btn" onclick="alert('Gumroad 链接即将配置，请稍候'); return false;">立即购买</a>
-            <p style="color: var(--text-dim); font-size: 14px; margin-top: 16px;">购买后直接下载，无需注册</p>
+            <div class="faq-item">
+                <div class="faq-q">需要技术背景吗？</div>
+                <div class="faq-a">不需要。手册里的方法对开发者和非开发者都适用。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">内容会更新吗？</div>
+                <div class="faq-a">Agent 框架在快速进化（OpenClaw、Claude Code、MiniMax……都在迭代）。这本手册基于 2026 年 4 月的最新实践。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">付款后多久收到？</div>
+                <div class="faq-a"> Gumroad 自动发货，付款后秒收到下载链接。</div>
+            </div>
         </div>
-    </section>
 
-    <section class="cta-section">
-        <div class="container">
-            <h2>看完手册能做出什么</h2>
-            <p>一个真正记得你业务的 AI 员工。持续运转，不用每次重头来。</p>
-            <a href="#buy" class="cta-btn">马上获取 · 19.9元</a>
+        <div style="text-align: center;">
+            <a href="#gumroad-link" class="buy-btn">立即获取 · ¥19.9</a>
         </div>
-    </section>
 
-    <footer>
-        <div class="container">
-            <p><a href="/">RalphKit</a> · 企业级AI Agent定制开发平台</p>
-            <p style="margin-top: 8px;">© 2024 RalphKit. All rights reserved.</p>
-        </div>
-    </footer>
-
+        <p class="version-note">版本 2.0 · 2026年4月 · PDF格式 · 可商用</p>
+    </div>
 </body>
 </html>
