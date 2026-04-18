@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RalphKit - 企业级AI Agent定制开发平台 | 智能员工解决方案</title>
+    <meta name="description" content="RalphKit提供企业级AI Agent定制开发服务，打造专属智能员工。财税Agent、人力Agent、客服Agent...按需定制，降本增效。">
+    <meta name="keywords" content="AI Agent, 企业级AI, 智能员工, 定制开发, 财税Agent, 人力Agent, 客服Agent, RPA, 自动化, 企业数字化转型">
+    <meta name="author" content="RalphKit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ralphkit.com/">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="RalphKit - 企业级AI Agent定制开发平台">
+    <meta property="og:description" content="打造专属智能员工，财税Agent、人力Agent、客服Agent...按需定制，降本增效">
+    <meta property="og:url" content="https://ralphkit.com/">
+    <meta property="og:site_name" content="RalphKit">
+    <meta property="og:image" content="https://ralphkit.com/og-image.png">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RalphKit - 企业级AI Agent定制开发平台">
+    <meta name="twitter:description" content="打造专属智能员工，财税Agent、人力Agent、客服Agent...按需定制，降本增效">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "RalphKit",
+        "description": "企业级AI Agent定制开发平台",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "CNY"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "RalphKit",
+            "url": "https://ralphkit.com"
+        }
+    }
+    </script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6366f1;
+            --accent: #818cf8;
+            --glow: #a5b4fc;
+            --text: #ffffff;
+            --text-dim: #94a3b8;
+            --dark: #0a0a0f;
+            --card: #12121a;
+            --card-hover: #1a1a24;
+            --border: #2a2a3a;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #e0e0e0, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover { color: var(--text); }
+        
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 180px 0 120px;
+            text-align: center;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--card);
+            border-color: var(--accent);
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .section-title p {
+            color: var(--text-dim);
+            font-size: 18px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        
+        .product-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .product-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .product-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        
+        .product-card p {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+        
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .product-features span {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: var(--card);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 24px;
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+        
+        .feature-item h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .feature-item p {
+            color: var(--text-dim);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        footer p {
+            color: var(--text-dim);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .hero-buttons { flex-direction: column; }
+            .features-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">RalphKit</a>
+                <ul class="nav-links">
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/fiscal-ai.html">财税AI</a></li>
+                    <li><a href="#products">产品</a></li>
+                    <li><a href="#features">优势</a></li>
+                </ul>
+                <a href="/fiscal-ai.html" class="cta-btn">联系我们</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>打造<span>企业级</span>智能员工</h1>
+            <p>基于先进的AI Agent技术，为企业定制专属智能员工。财税Agent、人力Agent、客服Agent...按需开发，快速部署，持续进化。</p>
+            <div class="hero-buttons">
+                <a href="/fiscal-ai.html" class="cta-btn">免费试用</a>
+                <a href="#products" class="btn-secondary">了解更多</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>智能员工产品</h2>
+                <p>开箱即用的企业级AI Agent解决方案</p>
+            </div>
+            <div class="products-grid">
+                <a href="/fiscal-ai.html" class="product-card">
+                    <div class="product-icon">💰</div>
+                    <h3>财税AI Agent</h3>
+                    <p>智能票据识别、AI自动审核、凭证自动生成、报表一键生成，让财务工作更高效。</p>
+                    <div class="product-features">
+                        <span>OCR识别</span>
+                        <span>AI审核</span>
+                        <span>自动做账</span>
+                        <span>报表生成</span>
+                    </div>
+                </a>
+                <a href="/fiscal-ai.html" class="product-card">
+                    <div class="product-icon">👥</div>
+                    <h3>人力AI Agent</h3>
+                    <p>简历筛选、面试安排、员工入职、考勤管理，全流程自动化人力资源解决方案。</p>
+                    <div class="product-features">
+                        <span>简历筛选</span>
+                        <span>智能面试</span>
+                        <span>入职管理</span>
+                        <span>考勤统计</span>
+                    </div>
+                </a>
+                <a href="/fiscal-ai.html" class="product-card">
+                    <div class="product-icon">💬</div>
+                    <h3>客服AI Agent</h3>
+                    <p>7x24小时智能客服，自动回答常见问题，智能转接人工，提升客户满意度。</p>
+                    <div class="product-features">
+                        <span>智能问答</span>
+                        <span>多轮对话</span>
+                        <span>工单处理</span>
+                        <span>数据分析</span>
+                    </div>
+                </a>
+                <a href="/agent-handbook.html" class="product-card" style="border-color: var(--success);">
+                    <div class="product-icon">📖</div>
+                    <h3>AI Agent 实操手册</h3>
+                    <p>把 AI 从工具变成真正的员工。SOUL.md、记忆系统、任务流转、成本控制——实战方法。</p>
+                    <div class="product-features">
+                        <span>可下载</span>
+                        <span>模板直接用</span>
+                        <span>19.9元</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>为什么选择RalphKit</h2>
+                <p>专为企业打造的AI Agent开发平台</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <h3>按需定制</h3>
+                    <p>根据企业实际需求定制开发，确保AI Agent完美适配业务流程</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3>安全可靠</h3>
+                    <p>企业级安全架构，数据加密传输，支持私有化部署</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3>快速部署</h3>
+                    <p>标准化开发流程，快速上线，快速见效</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h3>持续进化</h3>
+                    <p>AI能力持续学习优化，越用越聪明</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>效果可见</h3>
+                    <p>完整的数据分析，实时监控AI Agent工作效果</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🤝</div>
+                    <h3>专属服务</h3>
+                    <p>一对一专属服务，全程技术支持</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 RalphKit. All rights reserved. | 企业级AI Agent定制开发平台</p>
+        </div>
+    </footer>
+</body>
+</html>
